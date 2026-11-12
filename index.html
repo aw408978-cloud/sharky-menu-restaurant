@@ -413,8 +413,8 @@
             border: 1px solid var(--border-color);
         }
 
-        .tab-buttons { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
-        .tab-btn { flex: 1; padding: 10px; background: #EAE6DF; border: none; cursor: pointer; border-radius: 8px; font-family: 'Cairo', sans-serif; font-weight: 700; color: #555; min-width: 110px; }
+        .tab-buttons { display: flex; gap: 6px; margin-bottom: 20px; flex-wrap: wrap; }
+        .tab-btn { flex: 1; padding: 8px; background: #EAE6DF; border: none; cursor: pointer; border-radius: 8px; font-family: 'Cairo', sans-serif; font-weight: 700; color: #555; min-width: 90px; font-size: 0.9rem; }
         .tab-btn.active { background: var(--primary); color: var(--gold); }
 
         .toast {
@@ -434,6 +434,7 @@
             pointer-events: none;
         }
         .toast.show { opacity: 1; transform: translateY(0); }
+
     </style>
 </head>
 <body>
@@ -484,7 +485,7 @@
                 <input type="text" id="customer-address" placeholder="أدخل العنوان بالتفصيل">
             </div>
             <div class="total-box" id="cart-total">الإجمالي: 0 ج.م</div>
-            <button class="checkout-btn" onclick="checkout()" id="checkout-btn-text">تأكيد وإرسال الطلب</button>
+            <button class="checkout-btn" onclick="checkout()" id="checkout-btn-text">تأكيد وإرسال الطلب عبر واتساب</button>
         </div>
     </div>
 
@@ -507,12 +508,13 @@
     <div class="modal-overlay" id="admin-modal">
         <div class="modal-content" style="max-width: 680px;">
             <div class="modal-header">
-                <h2>إدارة المنيو والأقسام والنظام</h2>
+                <h2>إدارة المنيو والأقسام وإعدادات الطلبات</h2>
                 <button class="btn-close" onclick="closeAdminModal()">✕</button>
             </div>
             <div class="tab-buttons">
-                <button class="tab-btn active" onclick="switchAdminTab('items')" id="tab-items-btn">إدارة الأطباق</button>
-                <button class="tab-btn" onclick="switchAdminTab('categories')" id="tab-cats-btn">إدارة الأقسام</button>
+                <button class="tab-btn active" onclick="switchAdminTab('items')" id="tab-items-btn">الأطباق</button>
+                <button class="tab-btn" onclick="switchAdminTab('categories')" id="tab-cats-btn">الأقسام</button>
+                <button class="tab-btn" onclick="switchAdminTab('settings')" id="tab-settings-btn">رقم الواتساب</button>
                 <button class="tab-btn" onclick="switchAdminTab('password')" id="tab-pass-btn">كلمة المرور</button>
             </div>
 
@@ -574,6 +576,16 @@
                 <div id="admin-cats-list" style="max-height: 250px; overflow-y: auto;"></div>
             </div>
 
+            <div id="admin-tab-settings" style="display: none;">
+                <h3 style="color: var(--primary);">رقم هاتف استقبال الطلبات (واتساب)</h3>
+                <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 15px;">اكتب رقم الهاتف الذي ستصل عليه تفاصيل طلبات العملاء (اكتبه بصيغة الدولة، مثل: 201234567890+ أو بدون علامة الزائد).</p>
+                <div class="form-group">
+                    <label>رقم هاتف المطعم لاستلام الطلبات:</label>
+                    <input type="text" id="admin-phone-input" placeholder="مثال: 201012345678">
+                </div>
+                <button class="btn-success" style="margin-top: 15px; width: 100%;" onclick="saveAdminPhone()">حفظ رقم الهاتف</button>
+            </div>
+
             <div id="admin-tab-password" style="display: none;">
                 <h3 style="color: var(--primary);">تحديث كلمة مرور المبرمج</h3>
                 <div class="form-group">
@@ -594,7 +606,7 @@
     </div>
 
     <script>
-        const DATA_VERSION = 'v5_sharky_republic';
+        const DATA_VERSION = 'v6_sharky_republic';
         
         const defaultCategories = [
             { id: 'meals', icon: '🔥', title: { ar: 'قسم الوجبات والمشويات', en: 'Meals & Grills' } },
@@ -627,6 +639,7 @@
         let cart = [];
         let currentLang = 'ar';
         let adminPassword = '1234';
+        let restaurantPhone = '201000000000';
         let failedAttempts = 0;
         let lockUntil = 0;
         let timerInterval = null;
@@ -648,12 +661,11 @@
                 phoneLabel: "رقم الهاتف:",
                 addressLabel: "عنوان التوصيل بالتفصيل:",
                 totalText: "الإجمالي: ",
-                checkoutBtn: "تأكيد وإرسال الطلب",
+                checkoutBtn: "تأكيد وإرسال الطلب عبر واتساب",
                 cartBtnLabel: "سلة الطلبات",
                 toastAdded: "تمت الإضافة إلى السلة ✓",
                 alertEmpty: "سلة الطلبات فارغة!",
-                alertMissingData: "يرجى كتابة الاسم ورقم الهاتف (وعنوان التوصيل في حال اختيار التوصيل).",
-                alertSuccess: "تم استلام طلبك بنجاح! جاري تجهيز أطباقك بكل حب."
+                alertMissingData: "يرجى كتابة الاسم ورقم الهاتف (وعنوان التوصيل في حال اختيار التوصيل)."
             },
             en: {
                 pageTitle: "Sharky - Republic | Oriental Restaurant",
@@ -671,12 +683,11 @@
                 phoneLabel: "Phone Number:",
                 addressLabel: "Detailed Delivery Address:",
                 totalText: "Total: ",
-                checkoutBtn: "Confirm & Place Order",
+                checkoutBtn: "Confirm & Send Order via WhatsApp",
                 cartBtnLabel: "Cart",
                 toastAdded: "Added to cart ✓",
                 alertEmpty: "Your cart is empty!",
-                alertMissingData: "Please enter your name, phone number, and delivery address (if delivery).",
-                alertSuccess: "Order received successfully! Preparing your meal fresh."
+                alertMissingData: "Please enter your name, phone number, and delivery address (if delivery)."
             }
         };
 
@@ -697,6 +708,7 @@
                     menuItems = JSON.parse(storedMenu);
                 }
                 adminPassword = localStorage.getItem('admin_password') || '1234';
+                restaurantPhone = localStorage.getItem('restaurant_phone') || '201000000000';
                 failedAttempts = parseInt(localStorage.getItem('failed_attempts') || '0');
                 lockUntil = parseInt(localStorage.getItem('lock_until') || '0');
             } catch (e) {
@@ -867,13 +879,37 @@
             const t = translations[currentLang];
             const name = document.getElementById('customer-name').value.trim();
             const phone = document.getElementById('customer-phone').value.trim();
-            const orderType = document.getElementById('order-type').value;
+            const orderTypeSelect = document.getElementById('order-type');
+            const orderTypeText = orderTypeSelect.options[orderTypeSelect.selectedIndex].text;
             const address = document.getElementById('customer-address').value.trim();
 
             if (cart.length === 0) { alert(t.alertEmpty); return; }
-            if (!name || !phone || (orderType === 'delivery' && !address)) { alert(t.alertMissingData); return; }
+            if (!name || !phone || (orderTypeSelect.value === 'delivery' && !address)) { alert(t.alertMissingData); return; }
 
-            alert(t.alertSuccess);
+            let total = 0;
+            let itemsDetails = '';
+            cart.forEach(item => {
+                const itemName = item.name.ar || item.name;
+                const itemTotal = item.price * item.quantity;
+                total += itemTotal;
+                itemsDetails += `▪️ ${itemName} (العدد: ${item.quantity}) - ${itemTotal} ج.م\n`;
+            });
+
+            let whatsappMessage = `*🍽️ طلب جديد من مطعم شرقي - الجمهورية* \n\n`;
+            whatsappMessage += `👤 *اسم العميل:* ${name}\n`;
+            whatsappMessage += `📞 *رقم الهاتف:* ${phone}\n`;
+            whatsappMessage += `📋 *نوع الطلب:* ${orderTypeText}\n`;
+            if (orderTypeSelect.value === 'delivery') {
+                whatsappMessage += `📍 *عنوان التوصيل:* ${address}\n`;
+            }
+            whatsappMessage += `\n*🛒 تفاصيل الطلب والأطباق:*\n`;
+            whatsappMessage += itemsDetails;
+            whatsappMessage += `\n💰 *الإجمالي الكلي:* *${total} ج.م*`;
+
+            const encodedMessage = encodeURIComponent(whatsappMessage);
+            const whatsappUrl = `https://wa.me/${restaurantPhone}?text=${encodedMessage}`;
+            window.open(whatsappUrl, '_blank');
+
             cart = [];
             document.getElementById('customer-name').value = '';
             document.getElementById('customer-phone').value = '';
@@ -946,6 +982,7 @@
         function openAdminPanel() {
             renderAdminItemsList();
             renderAdminCategoriesList();
+            document.getElementById('admin-phone-input').value = restaurantPhone;
             document.getElementById('admin-modal').style.display = 'flex';
         }
 
@@ -954,13 +991,16 @@
         function switchAdminTab(tab) {
             const isItems = tab === 'items';
             const isCats = tab === 'categories';
+            const isSettings = tab === 'settings';
             document.getElementById('admin-tab-items').style.display = isItems ? 'block' : 'none';
             document.getElementById('admin-tab-categories').style.display = isCats ? 'block' : 'none';
-            document.getElementById('admin-tab-password').style.display = (!isItems && !isCats) ? 'block' : 'none';
+            document.getElementById('admin-tab-settings').style.display = isSettings ? 'block' : 'none';
+            document.getElementById('admin-tab-password').style.display = (!isItems && !isCats && !isSettings) ? 'block' : 'none';
             
             document.getElementById('tab-items-btn').classList.toggle('active', isItems);
             document.getElementById('tab-cats-btn').classList.toggle('active', isCats);
-            document.getElementById('tab-pass-btn').classList.toggle('active', (!isItems && !isCats));
+            document.getElementById('tab-settings-btn').classList.toggle('active', isSettings);
+            document.getElementById('tab-pass-btn').classList.toggle('active', (!isItems && !isCats && !isSettings));
         }
 
         function renderAdminItemsList() {
@@ -1071,6 +1111,17 @@
                 menuItems = menuItems.filter(i => i.id !== id);
                 saveAllAndRefresh();
             }
+        }
+
+        function saveAdminPhone() {
+            const phoneInput = document.getElementById('admin-phone-input').value.trim();
+            if(!phoneInput) {
+                alert("يرجى إدخال رقم صحيح.");
+                return;
+            }
+            restaurantPhone = phoneInput;
+            localStorage.setItem('restaurant_phone', restaurantPhone);
+            alert("تم حفظ رقم استقبال الطلبات بنجاح!");
         }
 
         function resetDefaultMenu() {
