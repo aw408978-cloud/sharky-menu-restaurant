@@ -1,0 +1,1113 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" id="html-root">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="page-title">شرقي - الجمهورية | Sharky</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2C1810;
+            --primary-light: #4A281B;
+            --gold: #C5A059;
+            --gold-hover: #A37033;
+            --bg: #F9F6F0;
+            --card-bg: #FFFFFF;
+            --text-dark: #222222;
+            --text-muted: #666666;
+            --border-color: #E8E2D5;
+            --danger: #D32F2F;
+            --success: #2E7D32;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Cairo', Tahoma, sans-serif;
+            background-color: var(--bg);
+            color: var(--text-dark);
+            padding-bottom: 100px;
+            line-height: 1.6;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1E0F0A 0%, var(--primary) 100%);
+            color: white;
+            text-align: center;
+            padding: 45px 20px 35px;
+            border-bottom: 4px solid var(--gold);
+            position: relative;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+        }
+
+        header h1 {
+            color: var(--gold);
+            font-size: 2.6rem;
+            font-weight: 800;
+            margin-bottom: 8px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.4);
+        }
+
+        header p {
+            color: #E0D8CC;
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .hidden-dev-trigger {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 75px;
+            height: 75px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            z-index: 9999;
+        }
+
+        .lang-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(197, 160, 89, 0.15);
+            color: var(--gold);
+            border: 1.5px solid var(--gold);
+            padding: 6px 18px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-family: 'Cairo', sans-serif;
+            font-weight: 700;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            z-index: 100;
+        }
+
+        .lang-btn:hover {
+            background: var(--gold);
+            color: var(--primary);
+        }
+
+        .category-nav {
+            background: var(--card-bg);
+            padding: 12px 20px;
+            position: sticky;
+            top: 0;
+            z-index: 800;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .nav-pill {
+            text-decoration: none;
+            color: var(--primary);
+            background: var(--bg);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            border: 1px solid var(--border-color);
+            transition: all 0.25s ease;
+        }
+
+        .nav-pill:hover {
+            background: var(--primary);
+            color: var(--gold);
+            border-color: var(--primary);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .category-section {
+            margin-bottom: 45px;
+            scroll-margin-top: 80px;
+        }
+
+        .category-title {
+            color: var(--primary);
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--gold);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 24px;
+        }
+
+        .item-card {
+            background: var(--card-bg);
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            border: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .item-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 25px rgba(44, 24, 16, 0.12);
+            border-color: var(--gold);
+        }
+
+        .item-image-wrapper {
+            width: 100%;
+            height: 200px;
+            background: #EFECE6;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .item-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+        .item-card:hover .item-image {
+            transform: scale(1.06);
+        }
+
+        .item-details {
+            padding: 18px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .item-details h4 {
+            color: var(--primary);
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .item-desc {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+
+        .item-price-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 12px;
+            border-top: 1px dashed var(--border-color);
+        }
+
+        .price-tag {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: var(--gold-hover);
+        }
+
+        button.action-btn {
+            background-color: var(--primary);
+            color: var(--gold);
+            border: 1px solid var(--primary);
+            padding: 8px 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'Cairo', sans-serif;
+            font-weight: 700;
+            font-size: 0.95rem;
+            transition: all 0.25s ease;
+        }
+
+        button.action-btn:hover {
+            background-color: var(--gold);
+            color: var(--primary);
+            border-color: var(--gold);
+        }
+
+        .cart-floating-btn {
+            position: fixed;
+            bottom: 25px;
+            left: 25px;
+            background: var(--primary);
+            color: white;
+            border: 2px solid var(--gold);
+            padding: 12px 24px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-family: 'Cairo', sans-serif;
+            font-weight: 700;
+            font-size: 1.1rem;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+            z-index: 900;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: transform 0.2s ease;
+        }
+
+        .cart-floating-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .cart-badge {
+            background: var(--gold);
+            color: var(--primary);
+            padding: 2px 10px;
+            border-radius: 20px;
+            font-weight: 800;
+            font-size: 0.95rem;
+        }
+
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.65);
+            backdrop-filter: blur(4px);
+            z-index: 10000;
+            justify-content: center;
+            align-items: center;
+            padding: 15px;
+        }
+
+        .modal-content {
+            background: var(--card-bg);
+            border-radius: 16px;
+            width: 100%;
+            max-width: 580px;
+            max-height: 88vh;
+            overflow-y: auto;
+            padding: 25px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+            border-top: 5px solid var(--gold);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 12px;
+            margin-bottom: 18px;
+        }
+
+        .modal-header h2, .modal-header h3 {
+            color: var(--primary);
+            margin: 0;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--bg);
+            padding: 12px 15px;
+            margin-bottom: 10px;
+            border-radius: 10px;
+            border-right: 4px solid var(--gold);
+        }
+
+        .qty-controls {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .qty-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            width: 28px;
+            height: 28px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1rem;
+        }
+
+        .qty-btn:hover { background: var(--gold); color: var(--primary); }
+
+        .form-group {
+            margin-top: 14px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 700;
+            color: var(--primary);
+            font-size: 0.95rem;
+        }
+
+        .form-group select, .form-group input {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1.5px solid var(--border-color);
+            border-radius: 8px;
+            font-family: 'Cairo', sans-serif;
+            font-size: 0.95rem;
+            background: #FAFAFA;
+        }
+
+        .total-box {
+            font-size: 1.35rem;
+            font-weight: 800;
+            margin-top: 20px;
+            text-align: center;
+            color: var(--primary);
+            background: var(--bg);
+            padding: 12px;
+            border-radius: 10px;
+            border: 1px dashed var(--gold);
+        }
+
+        .checkout-btn {
+            width: 100%;
+            background-color: var(--success);
+            margin-top: 15px;
+            padding: 12px;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-family: 'Cairo', sans-serif;
+            font-weight: 700;
+            font-size: 1.1rem;
+            cursor: pointer;
+        }
+
+        .btn-danger { background: var(--danger); color: white; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-family: 'Cairo', sans-serif; }
+        .btn-edit { background: #1976D2; color: white; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-family: 'Cairo', sans-serif; }
+        .btn-success { background: var(--success); color: white; border: none; padding: 10px 16px; border-radius: 8px; cursor: pointer; font-family: 'Cairo', sans-serif; font-weight: 700; }
+        .btn-close { background: #757575; color: white; border: none; padding: 8px 14px; border-radius: 8px; cursor: pointer; font-family: 'Cairo', sans-serif; }
+
+        .admin-item-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--bg);
+            padding: 10px 14px;
+            margin-bottom: 8px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .tab-buttons { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
+        .tab-btn { flex: 1; padding: 10px; background: #EAE6DF; border: none; cursor: pointer; border-radius: 8px; font-family: 'Cairo', sans-serif; font-weight: 700; color: #555; min-width: 110px; }
+        .tab-btn.active { background: var(--primary); color: var(--gold); }
+
+        .toast {
+            position: fixed;
+            bottom: 90px;
+            left: 25px;
+            background: var(--primary);
+            color: var(--gold);
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 700;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            z-index: 950;
+            opacity: 0;
+            transform: translateY(15px);
+            transition: all 0.3s ease;
+            pointer-events: none;
+        }
+        .toast.show { opacity: 1; transform: translateY(0); }
+    </style>
+</head>
+<body>
+
+    <header>
+        <button class="hidden-dev-trigger" title="" onclick="openDevAuth()"></button>
+        <button class="lang-btn" onclick="toggleLanguage()" id="lang-toggle-btn">English</button>
+        <h1 id="main-title">شرقي - الجمهورية</h1>
+        <p id="main-subtitle">أصالة المذاق الشرقي وخدمة الضيافة الملكية</p>
+    </header>
+
+    <nav class="category-nav" id="category-nav"></nav>
+    <div class="container" id="menu-container"></div>
+    <div class="toast" id="toast-msg">تمت الإضافة إلى السلة ✓</div>
+
+    <button class="cart-floating-btn" onclick="openCartModal()">
+        🛒 <span id="cart-btn-label">سلة الطلبات</span>
+        <span class="cart-badge" id="cart-count">0</span>
+    </button>
+
+    <div class="modal-overlay" id="cart-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="cart-heading">سلة الطلبات</h2>
+                <button class="btn-close" onclick="closeCartModal()">✕</button>
+            </div>
+            <div id="cart-items">
+                <p style="text-align: center; color: #888; padding: 20px 0;" id="empty-cart-text">السلة فارغة حالياً</p>
+            </div>
+            <div class="form-group">
+                <label id="order-type-label">طريقة الاستلام:</label>
+                <select id="order-type" onchange="toggleAddressField()">
+                    <option value="pickup" id="opt-pickup">استلام من المطعم</option>
+                    <option value="delivery" id="opt-delivery">توصيل للمنزل</option>
+                    <option value="dine-in" id="opt-dine">تناول داخل المطعم</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label id="name-label">الاسم بالكامل:</label>
+                <input type="text" id="customer-name" placeholder="أدخل اسمك الكريم">
+            </div>
+            <div class="form-group">
+                <label id="phone-label">رقم الهاتف:</label>
+                <input type="tel" id="customer-phone" placeholder="أدخل رقم هاتفك">
+            </div>
+            <div class="form-group" id="address-group" style="display: none;">
+                <label id="address-label">عنوان التوصيل بالتفصيل:</label>
+                <input type="text" id="customer-address" placeholder="أدخل العنوان بالتفصيل">
+            </div>
+            <div class="total-box" id="cart-total">الإجمالي: 0 ج.م</div>
+            <button class="checkout-btn" onclick="checkout()" id="checkout-btn-text">تأكيد وإرسال الطلب</button>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="auth-modal">
+        <div class="modal-content" style="max-width: 400px; text-align: center;">
+            <div class="modal-header" style="justify-content: center;">
+                <h3>لوحة إدارة المبرمج</h3>
+            </div>
+            <p id="auth-status-msg" style="margin-bottom: 15px; color: var(--text-muted);">أدخل كلمة المرور للوصول إلى لوحة التحكم:</p>
+            <div class="form-group">
+                <input type="password" id="admin-pass-input" placeholder="كلمة المرور (1234)" onkeyup="if(event.key==='Enter') verifyPassword()">
+            </div>
+            <div style="display: flex; gap: 10px; justify-content: center; margin-top: 20px;">
+                <button class="btn-success" style="flex: 1;" onclick="verifyPassword()">دخول</button>
+                <button class="btn-close" style="flex: 1;" onclick="closeAuthModal()">إلغاء</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="admin-modal">
+        <div class="modal-content" style="max-width: 680px;">
+            <div class="modal-header">
+                <h2>إدارة المنيو والأقسام والنظام</h2>
+                <button class="btn-close" onclick="closeAdminModal()">✕</button>
+            </div>
+            <div class="tab-buttons">
+                <button class="tab-btn active" onclick="switchAdminTab('items')" id="tab-items-btn">إدارة الأطباق</button>
+                <button class="tab-btn" onclick="switchAdminTab('categories')" id="tab-cats-btn">إدارة الأقسام</button>
+                <button class="tab-btn" onclick="switchAdminTab('password')" id="tab-pass-btn">كلمة المرور</button>
+            </div>
+
+            <div id="admin-tab-items">
+                <h3 style="color: var(--primary); margin-bottom: 10px;">+ إضافة صنف جديد</h3>
+                <div class="form-group">
+                    <label>القسم:</label>
+                    <select id="new-item-category"></select>
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                    <div class="form-group">
+                        <label>اسم الصنف (عربي):</label>
+                        <input type="text" id="new-item-name-ar" placeholder="مثال: ريش ضاني">
+                    </div>
+                    <div class="form-group">
+                        <label>اسم الصنف (إنجليزي):</label>
+                        <input type="text" id="new-item-name-en" placeholder="e.g. Lamb Chops">
+                    </div>
+                </div>
+                <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 10px;">
+                    <div class="form-group">
+                        <label>رابط الصورة:</label>
+                        <input type="text" id="new-item-img" placeholder="https://...">
+                    </div>
+                    <div class="form-group">
+                        <label>السعر (ج.م):</label>
+                        <input type="number" id="new-item-price" placeholder="250">
+                    </div>
+                </div>
+                <button class="btn-success" style="margin-top: 15px; width: 100%;" onclick="addNewItem()">إضافة الصنف للقائمة</button>
+                <hr style="margin: 25px 0; border-color: var(--border-color);">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                    <h3 style="color: var(--primary);">الأصناف الحالية</h3>
+                    <button class="btn-danger" style="font-size: 0.85rem;" onclick="resetDefaultMenu()">استعادة المنيو الافتراضي</button>
+                </div>
+                <div id="admin-items-list" style="max-height: 250px; overflow-y: auto;"></div>
+            </div>
+
+            <div id="admin-tab-categories" style="display: none;">
+                <h3 style="color: var(--primary); margin-bottom: 10px;">+ إضافة قسم جديد</h3>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                    <div class="form-group">
+                        <label>اسم القسم (عربي):</label>
+                        <input type="text" id="new-cat-ar" placeholder="مثال: قسم المشروبات">
+                    </div>
+                    <div class="form-group">
+                        <label>اسم القسم (إنجليزي):</label>
+                        <input type="text" id="new-cat-en" placeholder="e.g. Beverages">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>رمز القسم (الإيموجي):</label>
+                    <input type="text" id="new-cat-icon" placeholder="🥤">
+                </div>
+                <button class="btn-success" style="margin-top: 15px; width: 100%;" onclick="addNewCategory()">إضافة القسم للموقع</button>
+                
+                <hr style="margin: 25px 0; border-color: var(--border-color);">
+                <h3 style="color: var(--primary); margin-bottom: 12px;">الأقسام الحالية</h3>
+                <div id="admin-cats-list" style="max-height: 250px; overflow-y: auto;"></div>
+            </div>
+
+            <div id="admin-tab-password" style="display: none;">
+                <h3 style="color: var(--primary);">تحديث كلمة مرور المبرمج</h3>
+                <div class="form-group">
+                    <label>كلمة المرور الحالية:</label>
+                    <input type="password" id="old-pass-input">
+                </div>
+                <div class="form-group">
+                    <label>كلمة المرور الجديدة:</label>
+                    <input type="password" id="new-pass-input">
+                </div>
+                <div class="form-group">
+                    <label>تأكيد كلمة المرور الجديدة:</label>
+                    <input type="password" id="confirm-pass-input">
+                </div>
+                <button class="btn-success" style="margin-top: 15px; width: 100%;" onclick="changePassword()">حفظ كلمة المرور</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const DATA_VERSION = 'v5_sharky_republic';
+        
+        const defaultCategories = [
+            { id: 'meals', icon: '🔥', title: { ar: 'قسم الوجبات والمشويات', en: 'Meals & Grills' } },
+            { id: 'sandwiches', icon: '🥙', title: { ar: 'قسم الساندوتشات', en: 'Sandwiches' } },
+            { id: 'casseroles', icon: '🍲', title: { ar: 'قسم الطواجن والوجبات العائلية', en: 'Casseroles & Family Deals' } },
+            { id: 'appetizers', icon: '🥗', title: { ar: 'السلطات والمقبلات والحلويات', en: 'Salads, Appetizers & Desserts' } }
+        ];
+
+        const fallbackImg = "data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='400' viewBox='0 0 600 400'%3E%3Crect fill='%232C1810' width='600' height='400'/%3E%3Ctext fill='%23C5A059' font-family='Tahoma, sans-serif' font-size='32' font-weight='bold' x='50%25' y='50%25' text-anchor='middle' dy='.3em'%3Eشرقي - الجمهورية%3C/text%3E%3C/svg%3E";
+
+        const defaultItems = [
+            { id: 1, category: 'meals', name: { ar: 'وجبة كباب وكفتة مشوية', en: 'Grilled Kebab & Kofta Meal' }, desc: { ar: 'تقدم مع أرز بسمتي، سلطات، وخبز طازج', en: 'Served with basmati rice, salads & fresh bread' }, price: 185, image: 'https://images.pexels.com/photos/2233729/pexels-photo-2233729.jpeg?auto=compress&cs=tinysrgb&w=600' },
+            { id: 2, category: 'meals', name: { ar: 'وجبة نصف فرخة مشوية على الفحم', en: 'Charcoal Half Chicken Meal' }, desc: { ar: 'تتبيلة الجمهورية الخاصة مشوية على الفحم', en: 'Special marinated charcoal chicken' }, price: 145, image: 'https://images.pexels.com/photos/2673353/pexels-photo-2673353.jpeg?auto=compress&cs=tinysrgb&w=600' },
+            { id: 3, category: 'meals', name: { ar: 'وجبة شيش طاووق فاخر', en: 'Shish Taook Meal' }, desc: { ar: 'قطع صدور دجاج متبلة مع ثومية وأرز', en: 'Marinated chicken breast skewers with garlic dip' }, price: 155, image: 'https://images.pexels.com/photos/533325/pexels-photo-533325.jpeg?auto=compress&cs=tinysrgb&w=600' },
+            { id: 4, category: 'meals', name: { ar: 'وجبة ريش ضاني مشوية', en: 'Grilled Lamb Chops Meal' }, desc: { ar: 'ريش ضاني بلدي طرية مشوية بعناية', en: 'Tender local lamb chops grilled to perfection' }, price: 290, image: 'https://images.pexels.com/photos/323682/pexels-photo-323682.jpeg?auto=compress&cs=tinysrgb&w=600' },
+            { id: 5, category: 'sandwiches', name: { ar: 'ساندوتش كفتة شرقي بلدي', en: 'Oriental Kofta Sandwich' }, desc: { ar: 'كفتة مشوية على الفحم مع طحينة وبقدونس', en: 'Charcoal kofta with tahini & parsley' }, price: 50, image: 'https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg?auto=compress&cs=tinysrgb&w=600' },
+            { id: 6, category: 'sandwiches', name: { ar: 'ساندوتش طرب شرقي مخصوص', en: 'Special Tarab Sandwich' }, desc: { ar: 'كفتة ملفوفة بالمنديل الضاني على الفحم', en: 'Kofta wrapped in lamb caul fat' }, price: 65, image: 'https://images.pexels.com/photos/1600711/pexels-photo-1600711.jpeg?auto=compress&cs=tinysrgb&w=600' },
+            { id: 7, category: 'sandwiches', name: { ar: 'ساندوتش شيش طاووق', en: 'Shish Taook Sandwich' }, desc: { ar: 'قطع شيش طاووق مع صوص الثومية والخيار المخلل', en: 'Shish taook with garlic sauce & pickles' }, price: 55, image: 'https://images.pexels.com/photos/2983101/pexels-photo-2983101.jpeg?auto=compress&cs=tinysrgb&w=600' },
+            { id: 8, category: 'sandwiches', name: { ar: 'ساندوتش سجق شرقي مشوي', en: 'Grilled Oriental Sausage Sandwich' }, desc: { ar: 'سجق بلدي متبل بالخلطة الشرقية', en: 'Spiced local oriental sausage' }, price: 55, image: 'https://images.pexels.com/photos/1633525/pexels-photo-1633525.jpeg?auto=compress&cs=tinysrgb&w=600' },
+            { id: 9, category: 'casseroles', name: { ar: 'طاجن لحمة بالبصل المكرمل', en: 'Caramelized Onion Beef Casserole' }, desc: { ar: 'قطع لحم موزة مطهوة ببطء في الفرن', en: 'Slow-cooked beef shank in clay pot' }, price: 215, image: 'https://images.pexels.com/photos/674574/pexels-photo-674574.jpeg?auto=compress&cs=tinysrgb&w=600' },
+            { id: 10, category: 'casseroles', name: { ar: 'طاجن عكاوي بالخضار والبهارات', en: 'Oxtail Casserole with Vegetables' }, desc: { ar: 'طاجن عكاوي بلدي غني بالنكهات الأصيلة', en: 'Rich traditional oxtail clay pot' }, price: 245, image: 'https://images.pexels.com/photos/2097090/pexels-photo-2097090.jpeg?auto=compress&cs=tinysrgb&w=600' },
+            { id: 11, category: 'casseroles', name: { ar: 'وجبة العيلة (كيلو مشويات مشكل)', en: 'Family Feast (1KG Mixed Grills)' }, desc: { ar: 'كباب، كفتة، شيش، ريش + أرز + 4 سلطات', en: 'Kebab, kofta, shish, chops + rice + 4 salads' }, price: 680, image: 'https://images.pexels.com/photos/1251198/pexels-photo-1251198.jpeg?auto=compress&cs=tinysrgb&w=600' },
+            { id: 12, category: 'appetizers', name: { ar: 'تشكيلة مقبلات شرقي', en: 'Mixed Appetizers' }, desc: { ar: 'طحينة، بابا غنوج، ثومية، وسلطة خضراء', en: 'Tahini, baba ghanoush, garlic dip & green salad' }, price: 40, image: 'https://images.pexels.com/photos/1618900/pexels-photo-1618900.jpeg?auto=compress&cs=tinysrgb&w=600' },
+            { id: 13, category: 'appetizers', name: { ar: 'ممبار شرقي محمر', en: 'Crispy Oriental Mombar' }, desc: { ar: 'ممبار بلدي محشو بخلطة الأرز والأعشاب', en: 'Stuffed with spiced herbed rice' }, price: 75, image: 'https://images.pexels.com/photos/5409015/pexels-photo-5409015.jpeg?auto=compress&cs=tinysrgb&w=600' },
+            { id: 14, category: 'appetizers', name: { ar: 'طاجن أم علي بالمكسرات والقشطة', en: 'Om Ali with Nuts & Clotted Cream' }, desc: { ar: 'رقائق مخبوزة بالحليب والمكسرات والقشطة البلدي', en: 'Baked pastry with milk, nuts & cream' }, price: 65, image: 'https://images.pexels.com/photos/3026804/pexels-photo-3026804.jpeg?auto=compress&cs=tinysrgb&w=600' }
+        ];
+
+        let categories = [];
+        let menuItems = [];
+        let cart = [];
+        let currentLang = 'ar';
+        let adminPassword = '1234';
+        let failedAttempts = 0;
+        let lockUntil = 0;
+        let timerInterval = null;
+
+        const translations = {
+            ar: {
+                pageTitle: "شرقي - الجمهورية | Sharky",
+                mainTitle: "شرقي - الجمهورية",
+                mainSubtitle: "أصالة المذاق الشرقي وخدمة الضيافة الملكية",
+                langBtn: "English",
+                addBtn: "+ أضف للسلة",
+                cartHeading: "سلة الطلبات",
+                emptyCart: "السلة فارغة حالياً.. اختر أطباقك المفضلة!",
+                orderTypeLabel: "طريقة الاستلام:",
+                optPickup: "استلام من المطعم",
+                optDelivery: "توصيل للمنزل",
+                optDine: "تناول داخل المطعم",
+                nameLabel: "الاسم بالكامل:",
+                phoneLabel: "رقم الهاتف:",
+                addressLabel: "عنوان التوصيل بالتفصيل:",
+                totalText: "الإجمالي: ",
+                checkoutBtn: "تأكيد وإرسال الطلب",
+                cartBtnLabel: "سلة الطلبات",
+                toastAdded: "تمت الإضافة إلى السلة ✓",
+                alertEmpty: "سلة الطلبات فارغة!",
+                alertMissingData: "يرجى كتابة الاسم ورقم الهاتف (وعنوان التوصيل في حال اختيار التوصيل).",
+                alertSuccess: "تم استلام طلبك بنجاح! جاري تجهيز أطباقك بكل حب."
+            },
+            en: {
+                pageTitle: "Sharky - Republic | Oriental Restaurant",
+                mainTitle: "Sharky - Republic",
+                mainSubtitle: "Authentic Oriental Taste & Royal Hospitality",
+                langBtn: "العربية",
+                addBtn: "+ Add to Cart",
+                cartHeading: "Your Order Cart",
+                emptyCart: "Your cart is empty.. Pick your favorite dishes!",
+                orderTypeLabel: "Order Type:",
+                optPickup: "Restaurant Pickup",
+                optDelivery: "Home Delivery",
+                optDine: "Dine-in",
+                nameLabel: "Full Name:",
+                phoneLabel: "Phone Number:",
+                addressLabel: "Detailed Delivery Address:",
+                totalText: "Total: ",
+                checkoutBtn: "Confirm & Place Order",
+                cartBtnLabel: "Cart",
+                toastAdded: "Added to cart ✓",
+                alertEmpty: "Your cart is empty!",
+                alertMissingData: "Please enter your name, phone number, and delivery address (if delivery).",
+                alertSuccess: "Order received successfully! Preparing your meal fresh."
+            }
+        };
+
+        function initApp() {
+            try {
+                const savedVersion = localStorage.getItem('menu_data_version');
+                const storedCats = localStorage.getItem('restaurant_categories');
+                const storedMenu = localStorage.getItem('restaurant_menu');
+
+                if (savedVersion !== DATA_VERSION || !storedCats || !storedMenu) {
+                    categories = [...defaultCategories];
+                    menuItems = [...defaultItems];
+                    localStorage.setItem('restaurant_categories', JSON.stringify(categories));
+                    localStorage.setItem('restaurant_menu', JSON.stringify(menuItems));
+                    localStorage.setItem('menu_data_version', DATA_VERSION);
+                } else {
+                    categories = JSON.parse(storedCats);
+                    menuItems = JSON.parse(storedMenu);
+                }
+                adminPassword = localStorage.getItem('admin_password') || '1234';
+                failedAttempts = parseInt(localStorage.getItem('failed_attempts') || '0');
+                lockUntil = parseInt(localStorage.getItem('lock_until') || '0');
+            } catch (e) {
+                categories = [...defaultCategories];
+                menuItems = [...defaultItems];
+            }
+            renderNav();
+            renderMenu();
+            populateCategoryDropdown();
+        }
+
+        function populateCategoryDropdown() {
+            const select = document.getElementById('new-item-category');
+            if(!select) return;
+            select.innerHTML = categories.map(cat => 
+                `<option value="${cat.id}">${cat.icon} ${cat.title[currentLang] || cat.title.ar}</option>`
+            ).join('');
+        }
+
+        function renderNav() {
+            const nav = document.getElementById('category-nav');
+            nav.innerHTML = categories.map(cat => 
+                `<a href="#cat-${cat.id}" class="nav-pill">${cat.icon} ${cat.title[currentLang] || cat.title.ar}</a>`
+            ).join('');
+        }
+
+        function renderMenu() {
+            const container = document.getElementById('menu-container');
+            container.innerHTML = '';
+            categories.forEach(cat => {
+                const catItems = menuItems.filter(item => item.category === cat.id);
+                if (catItems.length === 0) return;
+                let itemsHTML = catItems.map(item => {
+                    const descText = item.desc ? (item.desc[currentLang] || item.desc.ar) : '';
+                    const itemName = item.name[currentLang] || item.name.ar;
+                    return `
+                        <div class="item-card">
+                            <div class="item-image-wrapper">
+                                <img class="item-image" src="${item.image}" alt="${itemName}" onerror="this.onerror=null; this.src='${fallbackImg}';">
+                            </div>
+                            <div class="item-details">
+                                <div>
+                                    <h4>${itemName}</h4>
+                                    ${descText ? `<p class="item-desc">${descText}</p>` : ''}
+                                </div>
+                                <div class="item-price-row">
+                                    <span class="price-tag">${item.price} ${currentLang === 'ar' ? 'ج.م' : 'EGP'}</span>
+                                    <button class="action-btn" onclick="addToCart(${item.id})">${translations[currentLang].addBtn}</button>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+
+                container.innerHTML += `
+                    <section class="category-section" id="cat-${cat.id}">
+                        <h3 class="category-title">${cat.icon} ${cat.title[currentLang] || cat.title.ar}</h3>
+                        <div class="menu-grid">${itemsHTML}</div>
+                    </section>
+                `;
+            });
+        }
+
+        function showToast() {
+            const toast = document.getElementById('toast-msg');
+            toast.innerText = translations[currentLang].toastAdded;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 1800);
+        }
+
+        function addToCart(id) {
+            const item = menuItems.find(i => i.id === id);
+            if (!item) return;
+            const existing = cart.find(c => c.id === id);
+            if (existing) {
+                existing.quantity += 1;
+            } else {
+                cart.push({ id: item.id, name: item.name, price: item.price, quantity: 1 });
+            }
+            updateCartUI();
+            showToast();
+        }
+
+        function changeQty(index, delta) {
+            cart[index].quantity += delta;
+            if (cart[index].quantity <= 0) {
+                cart.splice(index, 1);
+            }
+            updateCartUI();
+        }
+
+        function updateCartUI() {
+            const cartItemsContainer = document.getElementById('cart-items');
+            const cartTotalContainer = document.getElementById('cart-total');
+            const cartCountBadge = document.getElementById('cart-count');
+            const t = translations[currentLang];
+            const currency = currentLang === 'ar' ? 'ج.م' : 'EGP';
+
+            let totalQuantity = cart.reduce((sum, item) => sum + item.quantity, 0);
+            cartCountBadge.innerText = totalQuantity;
+
+            if (cart.length === 0) {
+                cartItemsContainer.innerHTML = `<p style="text-align: center; color: #888; padding: 20px 0;">${t.emptyCart}</p>`;
+                cartTotalContainer.innerHTML = `${t.totalText}0 ${currency}`;
+                return;
+            }
+
+            cartItemsContainer.innerHTML = '';
+            let total = 0;
+            cart.forEach((item, index) => {
+                total += item.price * item.quantity;
+                const itemName = item.name[currentLang] || item.name.ar;
+                cartItemsContainer.innerHTML += `
+                    <div class="cart-item">
+                        <div>
+                            <strong style="color: var(--primary);">${itemName}</strong><br>
+                            <small style="color: var(--text-muted);">${item.price} ${currency}</small>
+                        </div>
+                        <div class="qty-controls">
+                            <button class="qty-btn" onclick="changeQty(${index}, -1)">-</button>
+                            <span style="font-weight: bold; min-width: 20px; text-align: center;">${item.quantity}</span>
+                            <button class="qty-btn" onclick="changeQty(${index}, 1)">+</button>
+                        </div>
+                    </div>
+                `;
+            });
+            cartTotalContainer.innerHTML = `${t.totalText}${total} ${currency}`;
+        }
+
+        function openCartModal() { document.getElementById('cart-modal').style.display = 'flex'; }
+        function closeCartModal() { document.getElementById('cart-modal').style.display = 'none'; }
+
+        function toggleAddressField() {
+            const orderType = document.getElementById('order-type').value;
+            document.getElementById('address-group').style.display = (orderType === 'delivery') ? 'block' : 'none';
+        }
+
+        function toggleLanguage() {
+            currentLang = currentLang === 'ar' ? 'en' : 'ar';
+            const t = translations[currentLang];
+            const root = document.getElementById('html-root');
+
+            root.setAttribute('lang', currentLang);
+            root.setAttribute('dir', currentLang === 'ar' ? 'rtl' : 'ltr');
+
+            document.getElementById('page-title').innerText = t.pageTitle;
+            document.getElementById('lang-toggle-btn').innerText = t.langBtn;
+            document.getElementById('main-title').innerText = t.mainTitle;
+            document.getElementById('main-subtitle').innerText = t.mainSubtitle;
+            document.getElementById('cart-heading').innerText = t.cartHeading;
+            document.getElementById('cart-btn-label').innerText = t.cartBtnLabel;
+            document.getElementById('order-type-label').innerText = t.orderTypeLabel;
+            document.getElementById('opt-delivery').innerText = t.optDelivery;
+            document.getElementById('opt-pickup').innerText = t.optPickup;
+            document.getElementById('opt-dine').innerText = t.optDine;
+            document.getElementById('name-label').innerText = t.nameLabel;
+            document.getElementById('phone-label').innerText = t.phoneLabel;
+            document.getElementById('address-label').innerText = t.addressLabel;
+            document.getElementById('checkout-btn-text').innerText = t.checkoutBtn;
+
+            renderNav();
+            renderMenu();
+            updateCartUI();
+            populateCategoryDropdown();
+        }
+
+        function checkout() {
+            const t = translations[currentLang];
+            const name = document.getElementById('customer-name').value.trim();
+            const phone = document.getElementById('customer-phone').value.trim();
+            const orderType = document.getElementById('order-type').value;
+            const address = document.getElementById('customer-address').value.trim();
+
+            if (cart.length === 0) { alert(t.alertEmpty); return; }
+            if (!name || !phone || (orderType === 'delivery' && !address)) { alert(t.alertMissingData); return; }
+
+            alert(t.alertSuccess);
+            cart = [];
+            document.getElementById('customer-name').value = '';
+            document.getElementById('customer-phone').value = '';
+            document.getElementById('customer-address').value = '';
+            updateCartUI();
+            closeCartModal();
+        }
+
+        function openDevAuth() {
+            const now = Date.now();
+            if (now < lockUntil) {
+                startLockTimer();
+                document.getElementById('auth-modal').style.display = 'flex';
+                return;
+            }
+            document.getElementById('auth-status-msg').innerText = "أدخل كلمة المرور للوصول إلى لوحة التحكم:";
+            document.getElementById('admin-pass-input').value = '';
+            document.getElementById('admin-pass-input').disabled = false;
+            document.getElementById('auth-modal').style.display = 'flex';
+            setTimeout(() => document.getElementById('admin-pass-input').focus(), 100);
+        }
+
+        function closeAuthModal() {
+            document.getElementById('auth-modal').style.display = 'none';
+            if (timerInterval) clearInterval(timerInterval);
+        }
+
+        function verifyPassword() {
+            const now = Date.now();
+            if (now < lockUntil) { alert("النظام مقفل مؤقتاً!"); return; }
+            const inputPass = document.getElementById('admin-pass-input').value;
+            if (inputPass === adminPassword) {
+                failedAttempts = 0;
+                localStorage.setItem('failed_attempts', '0');
+                closeAuthModal();
+                openAdminPanel();
+            } else {
+                failedAttempts += 1;
+                localStorage.setItem('failed_attempts', failedAttempts.toString());
+                if (failedAttempts >= 5) {
+                    lockUntil = Date.now() + 60000;
+                    localStorage.setItem('lock_until', lockUntil.toString());
+                    startLockTimer();
+                } else {
+                    alert(`كلمة المرور غير صحيحة! المحاولات المتبقية: ${5 - failedAttempts}`);
+                }
+            }
+        }
+
+        function startLockTimer() {
+            document.getElementById('admin-pass-input').disabled = true;
+            if (timerInterval) clearInterval(timerInterval);
+            const updateTimer = () => {
+                const remainingSec = Math.ceil((lockUntil - Date.now()) / 1000);
+                if (remainingSec <= 0) {
+                    clearInterval(timerInterval);
+                    failedAttempts = 0;
+                    localStorage.setItem('failed_attempts', '0');
+                    localStorage.removeItem('lock_until');
+                    document.getElementById('admin-pass-input').disabled = false;
+                    document.getElementById('auth-status-msg').innerText = "انتهت مدة القفل. يمكنك المحاولة الآن:";
+                } else {
+                    document.getElementById('auth-status-msg').innerText = `تم القفل لكثرة المحاولات! حاول بعد: ${remainingSec} ثانية.`;
+                }
+            };
+            updateTimer();
+            timerInterval = setInterval(updateTimer, 1000);
+        }
+
+        function openAdminPanel() {
+            renderAdminItemsList();
+            renderAdminCategoriesList();
+            document.getElementById('admin-modal').style.display = 'flex';
+        }
+
+        function closeAdminModal() { document.getElementById('admin-modal').style.display = 'none'; }
+
+        function switchAdminTab(tab) {
+            const isItems = tab === 'items';
+            const isCats = tab === 'categories';
+            document.getElementById('admin-tab-items').style.display = isItems ? 'block' : 'none';
+            document.getElementById('admin-tab-categories').style.display = isCats ? 'block' : 'none';
+            document.getElementById('admin-tab-password').style.display = (!isItems && !isCats) ? 'block' : 'none';
+            
+            document.getElementById('tab-items-btn').classList.toggle('active', isItems);
+            document.getElementById('tab-cats-btn').classList.toggle('active', isCats);
+            document.getElementById('tab-pass-btn').classList.toggle('active', (!isItems && !isCats));
+        }
+
+        function renderAdminItemsList() {
+            const listContainer = document.getElementById('admin-items-list');
+            listContainer.innerHTML = menuItems.map(item => `
+                <div class="admin-item-row">
+                    <div>
+                        <strong style="color: var(--primary);">${item.name.ar}</strong> <small>(${item.name.en})</small>
+                        <br><small style="color: var(--gold-hover); font-weight: bold;">السعر: ${item.price} ج.م</small>
+                    </div>
+                    <div style="display: flex; gap: 6px;">
+                        <button class="btn-edit" onclick="editItemPrice(${item.id})">السعر</button>
+                        <button class="btn-danger" onclick="deleteItem(${item.id})">حذف</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderAdminCategoriesList() {
+            const listContainer = document.getElementById('admin-cats-list');
+            listContainer.innerHTML = categories.map(cat => `
+                <div class="admin-item-row">
+                    <div>
+                        <span style="font-size: 1.2rem; margin-left: 8px;">${cat.icon}</span>
+                        <strong style="color: var(--primary);">${cat.title.ar}</strong> <small>(${cat.title.en})</small>
+                    </div>
+                    <div>
+                        <button class="btn-danger" onclick="deleteCategory('${cat.id}')">حذف القسم</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function addNewCategory() {
+            const arName = document.getElementById('new-cat-ar').value.trim();
+            const enName = document.getElementById('new-cat-en').value.trim();
+            const icon = document.getElementById('new-cat-icon').value.trim() || '🍽️';
+
+            if (!arName || !enName) {
+                alert("يرجى إدخال اسم القسم بالعربية والإنجليزية.");
+                return;
+            }
+
+            const newId = 'cat_' + Date.now();
+            categories.push({
+                id: newId,
+                icon: icon,
+                title: { ar: arName, en: enName }
+            });
+
+            saveAllAndRefresh();
+            document.getElementById('new-cat-ar').value = '';
+            document.getElementById('new-cat-en').value = '';
+            document.getElementById('new-cat-icon').value = '';
+            alert("تمت إضافة القسم بنجاح!");
+        }
+
+        function deleteCategory(catId) {
+            if (categories.length <= 1) {
+                alert("لا يمكنك حذف كل الأقسام، يجب أن يبقى قسم واحد على الأقل.");
+                return;
+            }
+            if (confirm("هل أنت متأكد من حذف هذا القسم؟ (سيتم حذف جميع الأطباق الموجودة بداخله تلقائياً)")) {
+                categories = categories.filter(c => c.id !== catId);
+                menuItems = menuItems.filter(i => i.category !== catId);
+                saveAllAndRefresh();
+            }
+        }
+
+        function addNewItem() {
+            const cat = document.getElementById('new-item-category').value;
+            const nameAr = document.getElementById('new-item-name-ar').value.trim();
+            const nameEn = document.getElementById('new-item-name-en').value.trim();
+            const img = document.getElementById('new-item-img').value.trim() || fallbackImg;
+            const price = parseFloat(document.getElementById('new-item-price').value);
+
+            if (!nameAr || !nameEn || isNaN(price) || price <= 0) {
+                alert("يرجى إدخال اسم الصنف بالعربي والإنجليزي والسعر بشكل صحيح.");
+                return;
+            }
+            menuItems.push({
+                id: Date.now(),
+                category: cat,
+                name: { ar: nameAr, en: nameEn },
+                desc: { ar: '', en: '' },
+                price: price,
+                image: img
+            });
+            saveAllAndRefresh();
+            document.getElementById('new-item-name-ar').value = '';
+            document.getElementById('new-item-name-en').value = '';
+            document.getElementById('new-item-img').value = '';
+            document.getElementById('new-item-price').value = '';
+            alert("تمت إضافة الصنف بنجاح!");
+        }
+
+        function editItemPrice(id) {
+            const item = menuItems.find(i => i.id === id);
+            const newPrice = prompt(`أدخل السعر الجديد لصنف (${item.name.ar}):`, item.price);
+            if (newPrice !== null && !isNaN(parseFloat(newPrice)) && parseFloat(newPrice) > 0) {
+                item.price = parseFloat(newPrice);
+                saveAllAndRefresh();
+            }
+        }
+
+        function deleteItem(id) {
+            if (confirm("هل أنت متأكد من حذف هذا الصنف؟")) {
+                menuItems = menuItems.filter(i => i.id !== id);
+                saveAllAndRefresh();
+            }
+        }
+
+        function resetDefaultMenu() {
+            if (confirm("هل تريد استعادة المنيو والأقسام الافتراضية؟")) {
+                categories = [...defaultCategories];
+                menuItems = [...defaultItems];
+                saveAllAndRefresh();
+            }
+        }
+
+        function saveAllAndRefresh() {
+            localStorage.setItem('restaurant_categories', JSON.stringify(categories));
+            localStorage.setItem('restaurant_menu', JSON.stringify(menuItems));
+            renderNav();
+            renderMenu();
+            populateCategoryDropdown();
+            renderAdminItemsList();
+            renderAdminCategoriesList();
+        }
+
+        function changePassword() {
+            const oldPass = document.getElementById('old-pass-input').value;
+            const newPass = document.getElementById('new-pass-input').value;
+            const confirmPass = document.getElementById('confirm-pass-input').value;
+            if (oldPass !== adminPassword) { alert("كلمة المرور الحالية غير صحيحة!"); return; }
+            if (!newPass || newPass.length < 4) { alert("كلمة المرور الجديدة يجب ألا تقل عن 4 أرقام!"); return; }
+            if (newPass !== confirmPass) { alert("كلمتا المرور غير متطابقتين!"); return; }
+            adminPassword = newPass;
+            localStorage.setItem('admin_password', adminPassword);
+            alert("تم تغيير كلمة المرور بنجاح!");
+            document.getElementById('old-pass-input').value = '';
+            document.getElementById('new-pass-input').value = '';
+            document.getElementById('confirm-pass-input').value = '';
+            switchAdminTab('items');
+        }
+
+        document.addEventListener('DOMContentLoaded', initApp);
+    </script>
+</body>
+</html>
